@@ -1,6 +1,6 @@
 # app/services/npi_api.rb
 
-class NpiApi < ApplicationRecord
+class NpiApi
   BASE_URL = 'https://npiregistry.cms.hhs.gov/api/'.freeze
 
   def self.npi_send(method, query: {})
