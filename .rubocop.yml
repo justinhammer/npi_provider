@@ -1,0 +1,39 @@
+# .rubocop.yml
+
+# Extensions
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+# Base Rubocop
+AllCops:
+  Exclude:
+    - db/*
+    - db/**/*
+    - lib/*
+    - lib/**/*
+    - bin/*
+    - Gemfile
+
+Layout/LineLength:
+  Max: 125
+
+# Style
+Style/Documentation:
+  Enabled: false
+
+Style/FormatStringToken:
+  EnforcedStyle: template
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Rails
+Rails/Date:
+  EnforcedStyle: strict
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+Rails/TimeZone:
+  EnforcedStyle: strict
