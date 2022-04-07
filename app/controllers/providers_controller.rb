@@ -25,6 +25,10 @@ class ProvidersController < ApplicationController
     end
   end
 
+  def show
+    @provider = Provider.find(params[:id])
+  end
+
   def provider_params
     params.permit(:external_id)
   end
