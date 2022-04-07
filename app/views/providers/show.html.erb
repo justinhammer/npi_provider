@@ -1,0 +1,10 @@
+<%# app/views/providers/show.html.erb %>
+
+<div class='d-flex flex-column align-items-center pt-5' data-turbo="false">
+  <h2><%= @provider.external_id %></h2>
+  <%= link_to 'Back', providers_path %>
+
+  <pre><code>
+    <%= @pretty_json %>
+  </code></pre>
+</div>

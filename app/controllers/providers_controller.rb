@@ -27,6 +27,7 @@ class ProvidersController < ApplicationController
 
   def show
     @provider = Provider.find(params[:id])
+    @pretty_json = JSON.pretty_generate(JSON.parse(@provider.details))
   end
 
   def provider_params
