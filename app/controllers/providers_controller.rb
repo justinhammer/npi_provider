@@ -7,7 +7,7 @@ class ProvidersController < ApplicationController
     @providers = Provider.all
     return if @providers.blank?
 
-    @provider = @providers.where(id: params[:id]) if params[:id].present?
+    @provider = @providers.where(id: params[:id]).first if params[:id].present?
     @providers = @providers.sort_by { |provider| [ provider == @provider ? 0 : 1, provider ]  }
   end
 
