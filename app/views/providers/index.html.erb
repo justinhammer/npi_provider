@@ -16,24 +16,24 @@
     <% end %>
   </div>
 
-  <div class='table-responsive pt-5'>
-    <table class='table table-bordered'>
-      <thead>
-        <tr>
-          <th scope='col'>NPI Number</th>
-          <th scope='col'>Name Prefix</th>
-          <th scope='col'>First Name</th>
-          <th scope='col'>Last Name</th>
-          <th scope='col'>Primary Taxonomy Desc.</th>
-          <th scope='col'>Location</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if @providers.any? %>
+  <% if @providers.any? %>
+    <div class='table-responsive pt-5'>
+      <table class='table table-bordered'>
+        <thead>
+          <tr>
+            <th scope='col'>NPI Number</th>
+            <th scope='col'>Name Prefix</th>
+            <th scope='col'>First Name</th>
+            <th scope='col'>Last Name</th>
+            <th scope='col'>Primary Taxonomy Desc.</th>
+            <th scope='col'>Location</th>
+          </tr>
+        </thead>
+        <tbody>
           <% @providers.each do |provider|%>
             <% json_details = JSON.parse(provider.details, symbolize_names: true).first %>
             <% address = json_details.dig(:addresses).select { |address| address.dig(:address_purpose) == "LOCATION" }.first %>
-            <tr class='clickable-row' data-href="<%= provider_path(provider) %>">
+            <tr class="clickable-row <%= 'highlight' if provider == @provider %>" data-href="<%= provider_path(provider) %>">
               <th scope='row'><%= json_details.dig(:number) %></th>
               <td><%= json_details.dig(:basic, :name_prefix) %></td>
               <td><%= json_details.dig(:basic, :first_name) %></td>
@@ -42,9 +42,9 @@
               <td><%= "#{address.dig(:address_1)}, #{address.dig(:city)}, #{address.dig(:state)}" %></td>
             </tr>
           <%end%>
-        <% end%>
-      </tbody>
-    </table>
-  </div>
+        </tbody>
+      </table>
+    </div>
+  <% end%>
 </div>
 
