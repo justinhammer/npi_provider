@@ -1,16 +1,50 @@
 <%# app/views/providers/index.html.erb %>
 
-<div class='d-flex flex-column align-items-center pt-5' style='height: 100%'>
-  <h2>Search For NPI Record:</h2>
-  
-  <%= form_with url: providers_path, method: :post, id: 'provider-search-form' do |form| %>
-    <div>
-      <%= form.text_field :external_id, placeholder: '1234567890', maxlength: 10, id: 'provider-search-field', required: true %>
+<div class='d-flex flex-column align-items-center'>
+  <div class='d-flex flex-column align-items-center pt-5'>
+    <h2>Search For NPI Record:</h2>
+    
+    <%= form_with url: providers_path, method: :post, id: 'provider-search-form' do |form| %>
+      <div>
+        <%= form.text_field :external_id, placeholder: '1234567890', maxlength: 10, id: 'provider-search-field', required: true %>
 
-      <%= form.submit "Search"%>
-    </div>
-  <% end %>
-  <% if flash[:notice] %>
-    <div class="notice"><%= flash[:notice] %></div>
-  <% end %>
+        <%= form.submit "Search"%>
+      </div>
+    <% end %>
+    <% if flash[:notice] %>
+      <div class="notice"><%= flash[:notice] %></div>
+    <% end %>
+  </div>
+
+  <div class='table-responsive pt-5'>
+    <table class='table table-bordered table-striped'>
+      <thead>
+        <tr>
+          <th scope='col'>NPI Number</th>
+          <th scope='col'>Name Prefix</th>
+          <th scope='col'>First Name</th>
+          <th scope='col'>Last Name</th>
+          <th scope='col'>Primary Taxonomy Desc.</th>
+          <th scope='col'>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @providers.any? %>
+          <% @providers.each do |provider|%>
+            <% json_details = JSON.parse(provider.details, symbolize_names: true).first %>
+            <% address = json_details.dig(:addresses).select { |address| address.dig(:address_purpose) == "LOCATION" }.first %>
+            <tr class='clickable-row' data-href="<%= provider_path(provider) %>">
+              <th scope='row'><%= json_details.dig(:number) %></th>
+              <td><%= json_details.dig(:basic, :name_prefix) %></td>
+              <td><%= json_details.dig(:basic, :first_name) %></td>
+              <td><%= json_details.dig(:basic, :last_name) %></td>
+              <td><%= json_details.dig(:taxonomies).select { |taxonomy| taxonomy.dig(:primary) == true }.first.dig(:desc) %></td>
+              <td><%= "#{address.dig(:address_1)}, #{address.dig(:city)}, #{address.dig(:state)}" %></td>
+            </tr>
+          <%end%>
+        <% end%>
+      </tbody>
+    </table>
+  </div>
 </div>
+
