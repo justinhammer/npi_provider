@@ -1,1 +1,9 @@
 @import "bootstrap";
+
+.clickable-row {
+  cursor: pointer;
+
+  &:hover {
+    color: $blue;
+  }
+}
