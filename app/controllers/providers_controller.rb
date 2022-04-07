@@ -18,10 +18,10 @@ class ProvidersController < ApplicationController
     @provider = Provider.new(external_id: api_response.dig(:results).first.dig(:number), details: api_response.dig(:results).to_json)
     if @provider.save
       flash[:notice] = "Provider found and saved!"
-      return redirect_to providers_path(id: @provider.id)
+      redirect_to providers_path(id: @provider.id)
     else
       flash[:notice] = "#{@provider.external_id} Provider already saved:"
-      return redirect_to action: 'index'
+      redirect_to providers_path(id: Provider.find_by(external_id: @provider.external_id))
     end
   end
 
