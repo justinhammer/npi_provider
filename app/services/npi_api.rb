@@ -14,6 +14,6 @@ class NpiApi
     rescue StandardError
       raise "Failed to connect to NPI Registry at #{url}"
     end
-    [response_code: response.code, json_response: json_response]
+    json_response
   end
 end
