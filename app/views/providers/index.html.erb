@@ -1,5 +1,16 @@
 <%# app/views/providers/index.html.erb %>
 
-<div class='col-lg-6'>
-  <h1 class=>Hello, Rails!</h1>
+<div class='d-flex flex-column align-items-center pt-5' style='height: 100%'>
+  <h2>Search For NPI Record:</h2>
+  
+  <%= form_with url: providers_path, method: :post, id: 'provider-search-form' do |form| %>
+    <div>
+      <%= form.text_field :external_id, placeholder: '1234567890', maxlength: 10, id: 'provider-search-field', required: true %>
+
+      <%= form.submit "Search"%>
+    </div>
+  <% end %>
+  <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
 </div>
