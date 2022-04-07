@@ -15,7 +15,7 @@ class ProvidersController < ApplicationController
       return redirect_to action: 'index'
     end
 
-    @provider = Provider.new(external_id: api_response.dig(:results).first.dig(:number), details: api_response.dig(:results))
+    @provider = Provider.new(external_id: api_response.dig(:results).first.dig(:number), details: api_response.dig(:results).to_json)
     if @provider.save
       flash[:notice] = "Provider found!"
       redirect_to providers_path(id: @provider.id)
