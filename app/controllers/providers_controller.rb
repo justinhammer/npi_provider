@@ -11,16 +11,16 @@ class ProvidersController < ApplicationController
   def create
     api_response = send_npi_request(provider_params&.dig(:external_id))
     if api_response.dig(:results).empty?
-      flash[:notice] = "No Provider found with that NPI number"
+      flash[:notice] = "No Provider found with that NPI number."
       return redirect_to action: 'index'
     end
 
     @provider = Provider.new(external_id: api_response.dig(:results).first.dig(:number), details: api_response.dig(:results).to_json)
     if @provider.save
-      flash[:notice] = "Provider found!"
-      redirect_to providers_path(id: @provider.id)
+      flash[:notice] = "Provider found and saved!"
+      return redirect_to providers_path(id: @provider.id)
     else
-      flash[:notice] = "Unable to save Provider: #{@provider.errors.full_messages}"
+      flash[:notice] = "#{@provider.external_id} Provider already saved:"
       return redirect_to action: 'index'
     end
   end
