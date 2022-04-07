@@ -7,3 +7,7 @@ $("#provider-search-field").keypress(function(event) {
   let ch = String.fromCharCode(event.charCode);
   return (/[\d]/.test(ch));
 });
+
+$('.clickable-row').on('click', function () {
+  window.location = $(this).data('href');
+});
