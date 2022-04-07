@@ -6,6 +6,7 @@ class ProvidersController < ApplicationController
   def index
     @providers = Provider.all
     @provider = @providers.find(params[:id]) if @providers.present? && params[:id].present?
+    @providers = @providers.sort_by { |provider| [ provider == @provider ? 0 : 1, provider ]  }
   end
 
   def create
